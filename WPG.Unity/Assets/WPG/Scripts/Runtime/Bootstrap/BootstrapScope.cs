@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 using VContainer;
 using VContainer.Unity;
 using WPG.Runtime.Utilities.AddressablesController;
 using WPG.Runtime.Utilities.Loading;
+using WPG.Runtime.Utilities.SaveController;
 
 namespace WPG.Runtime.Bootstrap
 {
@@ -17,6 +19,7 @@ namespace WPG.Runtime.Bootstrap
             builder.Register<LoadingService>(Lifetime.Singleton);
             builder.Register<ILoadingController, LoadingController>(Lifetime.Singleton);
             builder.Register<IAddressablesController, AddressablesController>(Lifetime.Singleton);
+            builder.Register<ISaveController, SaveController>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<BootstrapFlow>();
         }

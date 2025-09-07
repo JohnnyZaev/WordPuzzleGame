@@ -9,8 +9,12 @@ EditorBuildSettings:
     path: Assets/WPG/Scenes/0. Bootstrap.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/WPG/Scenes/1. Gameplay.unity
+    path: Assets/WPG/Scenes/1. Menu.unity
+    guid: e752b5251e8ab4946bb084800408a344
+  - enabled: 1
+    path: Assets/WPG/Scenes/2. Gameplay.unity
     guid: 6d36f4c4b106e0847aaa5c736a879037
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 851d2a5b7ea62e9408117d7c68f80e5b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

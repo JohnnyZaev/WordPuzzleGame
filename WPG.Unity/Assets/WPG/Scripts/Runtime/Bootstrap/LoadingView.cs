@@ -15,7 +15,7 @@ namespace WPG.Runtime.Bootstrap
         
         private Tween _fadeTween;
         private Tween _progressTween;
-        private CancellationTokenSource _fadeCancellationTokenSource;
+        private readonly CancellationTokenSource _fadeCancellationTokenSource = new CancellationTokenSource();
 
         public override UniTask Show()
         {
