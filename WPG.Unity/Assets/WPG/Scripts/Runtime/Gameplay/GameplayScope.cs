@@ -1,22 +1,20 @@
-﻿using VContainer;
+﻿using UnityEngine;
+using VContainer;
 using VContainer.Unity;
-using WPG.Runtime.Utilities.Logging;
 
-namespace WPG.Runtime.WordPuzzle
+namespace WPG.Runtime.Gameplay
 {
     public class GameplayScope : LifetimeScope
     {
+        [SerializeField] private GameplayReferences _gameplayReferences;
+        
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<WordPuzzleFlow>();
-        }
-    }
-
-    public class WordPuzzleFlow : IStartable
-    {
-        public void Start()
-        {
-            Log.Gameplay.Info("WordPuzzleFlow started");
+            builder.RegisterComponent(_gameplayReferences);
+            
+            builder.Register<LevelController>(Lifetime.Scoped);
+            
+            builder.RegisterEntryPoint<GameplayFlow>();
         }
     }
 }

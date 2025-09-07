@@ -49,9 +49,11 @@ namespace WPG.Runtime.Menu
             }
             else
             {
-                _menuDTO = new MenuDTO();
-                _menuDTO.CompletedLevels = 0;
-                _menuDTO.CurrentLevel = 1;
+                _menuDTO = new MenuDTO
+                {
+                    CompletedLevels = 0,
+                    CurrentLevel = 1
+                };
                 await _saveController.SaveDataAsync(_menuDTO, RuntimeConstants.DTO.Menu);
             }
             
@@ -62,7 +64,7 @@ namespace WPG.Runtime.Menu
             _menuViewInstance._currentLevelText.text += _menuDTO.CurrentLevel.ToString();
             _menuViewInstance._completedLevelsText.text += _menuDTO.CompletedLevels.ToString();
             _menuViewInstance._playButton.OnClickAsObservable().ThrottleFirst(TimeSpan.MaxValue).Subscribe(_ => LoadGameplay()).AddTo(_disposables);
-            _menuViewInstance.Show();
+            _menuViewInstance.Show().Forget();
             _loadingController.FinishLoading().Forget();
         }
 

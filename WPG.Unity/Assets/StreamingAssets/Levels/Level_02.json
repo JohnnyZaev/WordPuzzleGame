@@ -1,0 +1,54 @@
+﻿{
+    "levelNumber": 1,
+    "levelName": "Sample Level",
+    "targetWords": [
+        "КЛАСТЕ",
+        "СЛОВО",
+        "ИГРА",
+        "БУКВА"
+    ],
+    "wordHints": [
+        "Группа букв",
+        "Единица речи",
+        "Развлечение",
+        "Символ алфавита"
+    ],
+    "letterClusters": [
+        {
+            "letters": "КЛ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "АС",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "ТЕ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "СЛ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "ОВО",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "ИГ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "РА",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "БУ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "КВА",
+            "frameColor": "#FFFFFFFF"
+        }
+    ]
+}

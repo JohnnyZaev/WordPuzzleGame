@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91044c549eeb4294a5951924d2761e7a, type: 3}
+  m_Name: "Word_\u041A\u043D\u0438\u0433\u0430"
+  m_EditorClassIdentifier: 
+  _word: "\u041A\u041D\u0418\u0413\u0410"
+  _hint: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u0437\u043D\u0430\u043D\u0438\u0439"
