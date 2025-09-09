@@ -1,49 +1,43 @@
 {
     "levelNumber": 1,
-    "levelName": "Level01",
+    "levelName": "Level 01",
     "targetWords": [
-        "ДЕРЕВО",
-        "ШКОЛА",
-        "КНИГА",
-        "СОЛНЦЕ"
-    ],
-    "wordHints": [
-        "Растение в лесу",
-        "Место учёбы",
-        "Источник знаний",
-        "Звезда в небе"
+        "КЛЕТКА",
+        "ПАНЕЛИ",
+        "РАМКОЙ",
+        "СТОЛИК"
     ],
     "letterClusters": [
         {
-            "letters": "ГА",
+            "letters": "ПА",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "ДЕР",
+            "letters": "НЕЛИ",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "ЕВО",
+            "letters": "СТО",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "КНИ",
+            "letters": "ЛИК",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "НЦЕ",
+            "letters": "КЛЕ",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "ОЛА",
+            "letters": "ТКА",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "СОЛ",
+            "letters": "РАМ",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "ШК",
+            "letters": "КОЙ",
             "frameColor": "#FFFFFFFF"
         }
     ]

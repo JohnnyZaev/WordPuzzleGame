@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5c1803d8154dea9d0872da0a5d3044, type: 3}
+  m_Name: Level_02
+  m_EditorClassIdentifier: 
+  _levelNumber: 2
+  _levelName: Level_02
+  _targetWords:
+  - {fileID: 11400000, guid: 929e08e2c695680498626b32ef39f069, type: 2}
+  - {fileID: 11400000, guid: d0c995a1264e8664cbdeffbf65748d68, type: 2}
+  - {fileID: 11400000, guid: bf6a90689c4a29747b2ed69adf20bb4b, type: 2}
+  - {fileID: 11400000, guid: 6cbd406e064f0c64ea645416f0574add, type: 2}
+  _letterClusters:
+  - "\u042D\u041A"
+  - "\u0420\u0410"
+  - "\u041D\u042B"
+  - "\u041F\u041E"
+  - "\u0421\u0415"
+  - "\u0412\u042B"
+  - "\u0418\u0413"
+  - "\u0420\u041E\u041A\u0418"
+  - "\u0421\u041B\u041E"
+  - "\u0413\u041E\u0412"

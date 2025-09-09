@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using R3;
+using WPG.Runtime.Gameplay.Views;
 
 namespace WPG.Runtime.Gameplay.ViewModels
 {
@@ -8,105 +10,95 @@ namespace WPG.Runtime.Gameplay.ViewModels
     {
         private readonly CompositeDisposable _disposables = new();
         private readonly WordSlot _wordSlot;
+        private readonly GameViewModel _gameViewModel;
         
-        // Public reactive properties for UI binding
-        public readonly ReactiveProperty<string> CurrentWord = new(string.Empty);
         public readonly ReactiveProperty<bool> IsCompleted = new();
-        public readonly ReactiveProperty<List<LetterClusterItem>> PlacedClusters = new();
         
-        // UI-specific properties
-        public readonly ReactiveProperty<string> DisplayText = new(string.Empty);
         public readonly ReactiveProperty<float> CompletionProgress = new();
         
-        public int Index => _wordSlot.Index;
+        private readonly Dictionary<int, LetterClusterView> _clusterViewMap = new();
+
+        private int Index => _wordSlot.Index;
         
-        public WordSlotViewModel(WordSlot wordSlot)
+        public List<LetterClusterView> GetPlacedClusterViews()
+        {
+            var placedClusters = _wordSlot.GetPlacedClusters();
+            var clusterViews = new List<LetterClusterView>();
+            
+            foreach (var cluster in placedClusters)
+            {
+                if (_clusterViewMap.TryGetValue(cluster.Id, out var clusterView))
+                {
+                    clusterViews.Add(clusterView);
+                }
+            }
+            
+            return clusterViews;
+        }
+
+        private void RegisterClusterView(LetterClusterView clusterView)
+        {
+            if (clusterView != null)
+            {
+                _clusterViewMap[clusterView.ClusterId] = clusterView;
+            }
+        }
+        
+        public WordSlotViewModel(WordSlot wordSlot, GameViewModel gameViewModel)
         {
             _wordSlot = wordSlot;
+            _gameViewModel = gameViewModel;
             
-            // Bind to word slot properties
-            _wordSlot.CurrentWord
-                .Subscribe(word => 
-                {
-                    CurrentWord.Value = word;
-                    UpdateDisplayText();
-                })
-                .AddTo(_disposables);
-                
             _wordSlot.IsCompleted
                 .Subscribe(completed => IsCompleted.Value = completed)
                 .AddTo(_disposables);
-                
-            _wordSlot.PlacedClusters
-                .Subscribe(clusters => PlacedClusters.Value = clusters)
-                .AddTo(_disposables);
             
-            // Subscribe to completion changes to update progress
             IsCompleted
-                .Subscribe(completed => CompletionProgress.Value = completed ? 1.0f : 0.0f)
+                .Subscribe(CompletionProgressCheck)
                 .AddTo(_disposables);
-                
-            UpdateDisplayText();
         }
-        
-        private void UpdateDisplayText()
+
+        private void CompletionProgressCheck(bool completed)
         {
-            var currentWord = CurrentWord.Value;
-            if (string.IsNullOrEmpty(currentWord))
-            {
-                // Show empty slots for the target word length (6 letters)
-                DisplayText.Value = "_ _ _ _ _ _";
-            }
-            else if (currentWord.Length < 6)
-            {
-                // Show current letters and empty slots for remaining
-                var letters = currentWord.ToCharArray();
-                var display = string.Empty;
-                
-                for (int i = 0; i < 6; i++)
-                {
-                    if (i < letters.Length)
-                    {
-                        display += letters[i];
-                    }
-                    else
-                    {
-                        display += "_";
-                    }
-                    
-                    if (i < 5) display += " ";
-                }
-                
-                DisplayText.Value = display;
-            }
-            else
-            {
-                // Show complete word with spaces
-                var letters = currentWord.ToCharArray();
-                DisplayText.Value = string.Join(" ", letters);
-            }
+            CompletionProgress.Value = completed ? 1.0f : 0.0f;
         }
-        
-        public bool CanAcceptCluster(LetterClusterItem cluster)
+
+        public bool CanAcceptClusterView(LetterClusterView clusterView)
         {
-            if (cluster == null || cluster.IsUsed.Value)
+            if (clusterView == null)
             {
                 return false;
             }
             
-            // Check if adding this cluster would exceed word length
-            int currentLength = CurrentWord.Value?.Length ?? 0;
-            return currentLength + cluster.Letters.Length <= 6;
+            var currentViews = GetPlacedClusterViews();
+            bool isAlreadyPlaced = currentViews.Contains(clusterView);
+            
+            if (isAlreadyPlaced)
+            {
+                return true;
+            }
+            
+            var placedClusters = _wordSlot.GetPlacedClusters().ToList();
+            int currentLetterCount = placedClusters.Sum(c => c.Letters.Length);
+            
+            return currentLetterCount < 6; // Conservative check - allow if not at maximum letters yet
+        }
+        
+        public void PlaceClusterView(LetterClusterView clusterView)
+        {
+            if (clusterView == null) return;
+            
+            RegisterClusterView(clusterView);
+            
+            _gameViewModel.TryPlaceCluster(clusterView.ClusterId, Index);
         }
         
         public void Dispose()
         {
             _disposables?.Dispose();
-            CurrentWord?.Dispose();
             IsCompleted?.Dispose();
-            PlacedClusters?.Dispose();
-            DisplayText?.Dispose();
             CompletionProgress?.Dispose();
+            _clusterViewMap.Clear();
         }
     }
 }

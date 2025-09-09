@@ -15,8 +15,16 @@ MonoBehaviour:
   _levelNumber: 1
   _levelName: Level 01
   _targetWords:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _letterClusters: []
+  - {fileID: 11400000, guid: 1f5fc0aea8dec724ca14bf1f1e42b05b, type: 2}
+  - {fileID: 11400000, guid: d1367fb0b1ac6f04c9817b48c48653d7, type: 2}
+  - {fileID: 11400000, guid: 4e6c5b5b02fd8c345868653ff5789fbd, type: 2}
+  - {fileID: 11400000, guid: 58f67592d9fca854faebf4a94d806451, type: 2}
+  _letterClusters:
+  - "\u041F\u0410"
+  - "\u041D\u0415\u041B\u0418"
+  - "\u0421\u0422\u041E"
+  - "\u041B\u0418\u041A"
+  - "\u041A\u041B\u0415"
+  - "\u0422\u041A\u0410"
+  - "\u0420\u0410\u041C"
+  - "\u041A\u041E\u0419"

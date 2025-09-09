@@ -45,14 +45,13 @@ namespace WPG.Runtime.Gameplay.ViewModels
             _loadingController = loadingController;
             _gameState = new GameState();
             
-            // Bind game state properties
             _gameState.IsLevelCompleted
                 .Subscribe(completed => 
                 {
                     IsLevelCompleted.Value = completed;
                     if (completed)
                     {
-                        HandleLevelCompletion();
+                        _ = HandleLevelCompletion();
                     }
                 })
                 .AddTo(_disposables);
@@ -93,15 +92,13 @@ namespace WPG.Runtime.Gameplay.ViewModels
                 CurrentLevelNumber.Value = levelNumber;
                 LevelName.Value = levelData.levelName;
                 
-                // Create ViewModels for word slots
                 var wordSlotViewModels = new List<WordSlotViewModel>();
                 for (int i = 0; i < _gameState.WordSlots.Length; i++)
                 {
-                    wordSlotViewModels.Add(new WordSlotViewModel(_gameState.WordSlots[i]));
+                    wordSlotViewModels.Add(new WordSlotViewModel(_gameState.WordSlots[i], this));
                 }
                 WordSlots.Value = wordSlotViewModels;
                 
-                // Create ViewModels for letter clusters
                 var clusterViewModels = new List<LetterClusterViewModel>();
                 if (_gameState.AvailableClusters.Value != null)
                 {
@@ -150,13 +147,11 @@ namespace WPG.Runtime.Gameplay.ViewModels
         
         private async UniTaskVoid HandleLevelCompletion()
         {
-            // Use completion order from GameState instead of slot order
             var completedWords = new List<string>(_gameState.CompletedWordsInOrder);
             
             CompletedWords.Value = completedWords;
             ShowVictoryScreen.Value = true;
             
-            // Update MenuDTO with level completion
             await UpdateMenuDTOOnLevelCompletion();
             
             Log.Gameplay.Info($"Level {CurrentLevelNumber.Value} completed with words in completion order: {string.Join(", ", completedWords)}");
@@ -166,7 +161,6 @@ namespace WPG.Runtime.Gameplay.ViewModels
         {
             try
             {
-                // Load current MenuDTO
                 MenuDTO menuDTO;
                 if (_saveController.SaveFileExists(RuntimeConstants.DTO.Menu))
                 {
@@ -181,10 +175,8 @@ namespace WPG.Runtime.Gameplay.ViewModels
                     };
                 }
                 
-                // Increment completed levels
                 menuDTO.CompletedLevels++;
                 
-                // Save updated MenuDTO
                 await _saveController.SaveDataAsync(menuDTO, RuntimeConstants.DTO.Menu);
                 
                 Log.Gameplay.Info($"MenuDTO updated: CompletedLevels = {menuDTO.CompletedLevels}");
@@ -210,17 +202,14 @@ namespace WPG.Runtime.Gameplay.ViewModels
             ShowVictoryScreen.Value = false;
             int nextLevel = CurrentLevelNumber.Value + 1;
             
-            // Check if the next level exists
             if (_levelDataLoader.LevelExists(nextLevel))
             {
-                // The next level exists - advance to it
                 await UpdateMenuDTOCurrentLevel(nextLevel);
                 LoadLevel(nextLevel);
                 Log.Gameplay.Info($"Loading next level: {nextLevel}");
             }
             else
             {
-                // No more levels - reset to level 1
                 await UpdateMenuDTOCurrentLevel(1);
                 LoadLevel(1);
                 Log.Gameplay.Info($"No more levels available, resetting to level 1");
@@ -231,7 +220,6 @@ namespace WPG.Runtime.Gameplay.ViewModels
         {
             try
             {
-                // Load current MenuDTO
                 MenuDTO menuDTO;
                 if (_saveController.SaveFileExists(RuntimeConstants.DTO.Menu))
                 {
@@ -246,10 +234,8 @@ namespace WPG.Runtime.Gameplay.ViewModels
                     };
                 }
                 
-                // Update current level
                 menuDTO.CurrentLevel = newCurrentLevel;
                 
-                // Save updated MenuDTO
                 await _saveController.SaveDataAsync(menuDTO, RuntimeConstants.DTO.Menu);
                 
                 Log.Gameplay.Info($"MenuDTO updated: CurrentLevel = {menuDTO.CurrentLevel}");
@@ -265,7 +251,6 @@ namespace WPG.Runtime.Gameplay.ViewModels
             _disposables?.Dispose();
             _gameState?.Dispose();
             
-            // Dispose ViewModels
             if (WordSlots.Value != null)
             {
                 foreach (var vm in WordSlots.Value)

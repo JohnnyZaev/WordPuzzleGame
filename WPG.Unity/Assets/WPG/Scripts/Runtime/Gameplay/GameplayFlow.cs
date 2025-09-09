@@ -53,7 +53,6 @@ namespace WPG.Runtime.Gameplay
 
             await _loadingService.BeginLoading(_levelController);
 
-            // Initialize GameFieldView with the loaded GameViewModel
             if (_gameplayReferences.GameFieldView != null && _levelController.GameViewModel != null)
             {
                 _gameplayReferences.GameFieldView.Initialize(_levelController.GameViewModel);

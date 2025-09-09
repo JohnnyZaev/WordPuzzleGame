@@ -1,41 +1,15 @@
-﻿{
-    "levelNumber": 1,
-    "levelName": "Sample Level",
+{
+    "levelNumber": 2,
+    "levelName": "Level_02",
     "targetWords": [
-        "КЛАСТЕ",
-        "СЛОВО",
-        "ИГРА",
-        "БУКВА"
-    ],
-    "wordHints": [
-        "Группа букв",
-        "Единица речи",
-        "Развлечение",
-        "Символ алфавита"
+        "ИГРОКИ",
+        "ПОСЕВЫ",
+        "СЛОГОВ",
+        "ЭКРАНЫ"
     ],
     "letterClusters": [
         {
-            "letters": "КЛ",
-            "frameColor": "#FFFFFFFF"
-        },
-        {
-            "letters": "АС",
-            "frameColor": "#FFFFFFFF"
-        },
-        {
-            "letters": "ТЕ",
-            "frameColor": "#FFFFFFFF"
-        },
-        {
-            "letters": "СЛ",
-            "frameColor": "#FFFFFFFF"
-        },
-        {
-            "letters": "ОВО",
-            "frameColor": "#FFFFFFFF"
-        },
-        {
-            "letters": "ИГ",
+            "letters": "ЭК",
             "frameColor": "#FFFFFFFF"
         },
         {
@@ -43,11 +17,35 @@
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "БУ",
+            "letters": "НЫ",
             "frameColor": "#FFFFFFFF"
         },
         {
-            "letters": "КВА",
+            "letters": "ПО",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "СЕ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "ВЫ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "ИГ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "РОКИ",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "СЛО",
+            "frameColor": "#FFFFFFFF"
+        },
+        {
+            "letters": "ГОВ",
             "frameColor": "#FFFFFFFF"
         }
     ]

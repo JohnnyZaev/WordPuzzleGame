@@ -12,7 +12,7 @@ namespace WPG.Runtime.Gameplay
         private readonly CompositeDisposable _disposables = new();
         
         // Level data
-        public LevelData CurrentLevel { get; private set; }
+        private LevelData CurrentLevel { get; set; }
         
         // Game field state - 4 words with 6 letters each
         public readonly WordSlot[] WordSlots = new WordSlot[4];
@@ -33,7 +33,7 @@ namespace WPG.Runtime.Gameplay
             // Initialize word slots
             for (int i = 0; i < WordSlots.Length; i++)
             {
-                WordSlots[i] = new WordSlot(i);
+                WordSlots[i] = new WordSlot(i, this);
             }
             
             // Subscribe to word completion changes for both tracking and validation
@@ -85,13 +85,8 @@ namespace WPG.Runtime.Gameplay
             }
             
             var wordSlot = WordSlots[wordSlotIndex];
-            if (wordSlot.TryPlaceCluster(cluster))
-            {
-                cluster.SetUsed(wordSlotIndex);
-                return true;
-            }
-            
-            return false;
+            // WordSlot now handles cluster state setting directly
+            return wordSlot.TryPlaceCluster(cluster);
         }
         
         public bool TryRemoveCluster(int clusterId)
@@ -103,13 +98,8 @@ namespace WPG.Runtime.Gameplay
             }
             
             var wordSlot = WordSlots[cluster.UsedInWordSlot.Value];
-            if (wordSlot.TryRemoveCluster(clusterId))
-            {
-                cluster.SetUnused();
-                return true;
-            }
-            
-            return false;
+            // WordSlot now handles cluster state setting directly
+            return wordSlot.TryRemoveCluster(clusterId);
         }
         
         private void OnWordCompletionChanged(WordSlot wordSlot, bool isCompleted)
@@ -181,14 +171,12 @@ namespace WPG.Runtime.Gameplay
             var targetWordsList = CurrentLevel.targetWords.ToList();
             var currentWordsList = currentWords.Where(w => !string.IsNullOrEmpty(w)).ToList();
             
-            // Check if all target words are found in current words (regardless of position)
             foreach (var targetWord in targetWordsList)
             {
                 if (!currentWordsList.Contains(targetWord.ToUpper()))
                     return false;
             }
             
-            // Check if we have the correct number of words
             return currentWordsList.Count == targetWordsList.Count;
         }
         
@@ -199,7 +187,6 @@ namespace WPG.Runtime.Gameplay
                 slot.Clear();
             }
             
-            // Clear completion order tracking
             _completedWordsInOrder.Clear();
             
             if (AvailableClusters.Value != null)

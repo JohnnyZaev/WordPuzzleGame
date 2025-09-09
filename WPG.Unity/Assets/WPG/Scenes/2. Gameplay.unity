@@ -391,7 +391,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5068402385096441707, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
   m_PrefabInstance: {fileID: 8378579554999007004}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1725342346}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2672825e08494454b6d7a8cf286027b8, type: 3}
@@ -523,7 +523,8 @@ MonoBehaviour:
   parentReference:
     TypeName: WPG.Runtime.Bootstrap.BootstrapScope
   autoRun: 1
-  autoInjectGameObjects: []
+  autoInjectGameObjects:
+  - {fileID: 1725342346}
   _gameplayReferences:
     _gameplayView:
       m_AssetGUID: 
@@ -557,6 +558,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 0
+--- !u!1 &1725342346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8995614564418720146, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
+  m_PrefabInstance: {fileID: 8378579554999007004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8378579554999007004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -617,6 +623,14 @@ PrefabInstance:
       propertyPath: _victoryView
       value: 
       objectReference: {fileID: 619434217}
+    - target: {fileID: 5068402385096441707, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
+      propertyPath: _wordSlotPrefabReference.m_AssetGUID
+      value: a0ddc5389d656414a9c516f6a1f330be
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068402385096441707, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
+      propertyPath: _letterClusterPrefabReference.m_AssetGUID
+      value: bd4cc5500987fc0459ee5f2520fc454d
+      objectReference: {fileID: 0}
     - target: {fileID: 5950032516017104560, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -737,6 +751,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8899260778792463351, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8995614564418720146, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
       propertyPath: m_Name
       value: GameFieldView
@@ -755,7 +773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179467806230461277, guid: 19137bfa8a06f894998493a408d8e5f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000024318695
+      value: 0.000014305115
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

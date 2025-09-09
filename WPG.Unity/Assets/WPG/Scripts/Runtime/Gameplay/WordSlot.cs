@@ -8,30 +8,33 @@ namespace WPG.Runtime.Gameplay
 {
     public class WordSlot : IDisposable
     {
-        private readonly CompositeDisposable _disposables = new();
-        private readonly List<LetterClusterItem> _placedClusters = new();
+        private readonly GameState _gameState;
         
         public int Index { get; }
-        public string[] TargetWords { get; private set; } = Array.Empty<string>();
+        private string[] TargetWords { get; set; } = Array.Empty<string>();
         
         public readonly ReactiveProperty<string> CurrentWord = new(string.Empty);
         public readonly ReactiveProperty<bool> IsCompleted = new();
-        public readonly ReactiveProperty<List<LetterClusterItem>> PlacedClusters = new();
         
-        public WordSlot(int index)
+        public WordSlot(int index, GameState gameState)
         {
             Index = index;
-            
-            // Subscribe to cluster changes to update
-            PlacedClusters
-                .Subscribe(_ => UpdateCurrentWord())
-                .AddTo(_disposables);
+            _gameState = gameState;
         }
         
         public void SetTargetWords(string[] targetWords)
         {
             TargetWords = targetWords ?? Array.Empty<string>();
             UpdateCurrentWord();
+        }
+        
+        public IEnumerable<LetterClusterItem> GetPlacedClusters()
+        {
+            if (_gameState?.AvailableClusters.Value == null) return Enumerable.Empty<LetterClusterItem>();
+            
+            return _gameState.AvailableClusters.Value
+                .Where(c => c.IsUsed.Value && c.UsedInWordSlot.Value == Index)
+                .OrderBy(c => c.Id);
         }
         
         public bool TryPlaceCluster(LetterClusterItem cluster)
@@ -41,51 +44,54 @@ namespace WPG.Runtime.Gameplay
                 return false;
             }
             
-            // Check if adding this cluster would exceed word length
-            int currentLength = _placedClusters.Sum(c => c.Letters.Length);
+            var placedClusters = GetPlacedClusters().ToList();
+            int currentLength = placedClusters.Sum(c => c.Letters.Length);
             if (currentLength + cluster.Letters.Length > 6) // Words are 6 letters
             {
                 return false;
             }
             
-            _placedClusters.Add(cluster);
-            PlacedClusters.Value = new List<LetterClusterItem>(_placedClusters);
+            cluster.SetUsed(Index);
+            UpdateCurrentWord();
             return true;
         }
         
         public bool TryRemoveCluster(int clusterId)
         {
-            var cluster = _placedClusters.FirstOrDefault(c => c.Id == clusterId);
+            var cluster = GetPlacedClusters().FirstOrDefault(c => c.Id == clusterId);
             if (cluster == null)
             {
                 return false;
             }
             
-            _placedClusters.Remove(cluster);
-            PlacedClusters.Value = new List<LetterClusterItem>(_placedClusters);
+            cluster.SetUnused();
+            UpdateCurrentWord();
             return true;
         }
         
         public void Clear()
         {
-            _placedClusters.Clear();
-            PlacedClusters.Value = new List<LetterClusterItem>();
+            var placedClusters = GetPlacedClusters().ToList();
+            foreach (var cluster in placedClusters)
+            {
+                cluster.SetUnused();
+            }
+            UpdateCurrentWord();
         }
         
         private void UpdateCurrentWord()
         {
-            if (_placedClusters.Count == 0)
+            var placedClusters = GetPlacedClusters().ToList();
+            if (placedClusters.Count == 0)
             {
                 CurrentWord.Value = string.Empty;
                 IsCompleted.Value = false;
                 return;
             }
             
-            // Concatenate all cluster letters
-            string word = string.Concat(_placedClusters.Select(c => c.Letters));
+            string word = string.Concat(placedClusters.Select(c => c.Letters));
             CurrentWord.Value = word.ToUpper();
             
-            // Check if the current word matches any target word
             bool isCompleted = TargetWords != null && TargetWords.Any(target => target.ToUpper() == CurrentWord.Value);
             IsCompleted.Value = isCompleted;
             
@@ -94,10 +100,8 @@ namespace WPG.Runtime.Gameplay
         
         public void Dispose()
         {
-            _disposables?.Dispose();
             CurrentWord?.Dispose();
             IsCompleted?.Dispose();
-            PlacedClusters?.Dispose();
         }
     }
 }

@@ -33,7 +33,6 @@ namespace WPG.Runtime.Gameplay
             {
                 Log.Gameplay.Info("LevelController loading...");
                 
-                // Create game view model
                 _gameViewModel = new GameViewModel(_levelDataLoader, _saveController, _loadingController);
                 
                 // Load menu data to get current level

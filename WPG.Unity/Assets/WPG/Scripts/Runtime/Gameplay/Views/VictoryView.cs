@@ -32,7 +32,6 @@ namespace WPG.Runtime.Gameplay.Views
         {
             _viewModel = viewModel;
             
-            // Subscribe to ViewModel properties
             _viewModel.CompletedWords
                 .Subscribe(UpdateWordsDisplay)
                 .AddTo(_disposables);
@@ -45,7 +44,6 @@ namespace WPG.Runtime.Gameplay.Views
                 .Subscribe(UpdateNextLevelButton)
                 .AddTo(_disposables);
             
-            // Subscribe to button clicks
             if (_mainMenuButton != null)
             {
                 _mainMenuButton.OnClickAsObservable()
@@ -62,7 +60,6 @@ namespace WPG.Runtime.Gameplay.Views
                     .AddTo(_disposables);
             }
             
-            // Set the initial congratulations text
             if (_congratsText != null)
             {
                 _congratsText.text = "Поздравляем!";
@@ -71,7 +68,6 @@ namespace WPG.Runtime.Gameplay.Views
         
         private void UpdateWordsDisplay(List<string> completedWords)
         {
-            // Clear existing word text instances
             foreach (var wordText in _wordTextInstances)
             {
                 if (wordText != null)
@@ -81,7 +77,6 @@ namespace WPG.Runtime.Gameplay.Views
             }
             _wordTextInstances.Clear();
             
-            // Create new word text instances
             if (completedWords != null && _wordTextPrefab != null && _wordsContainer != null)
             {
                 for (int i = 0; i < completedWords.Count; i++)
@@ -90,7 +85,6 @@ namespace WPG.Runtime.Gameplay.Views
                     wordText.text = completedWords[i];
                     wordText.color = _wordTextColor;
                     
-                    // Add spacing
                     var rectTransform = wordText.GetComponent<RectTransform>();
                     if (rectTransform != null)
                     {

@@ -108,8 +108,8 @@ RectTransform:
   - {fileID: 5356654525487877921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -128,10 +128,7 @@ MonoBehaviour:
   _lettersText: {fileID: 88372323899222440}
   _frameImage: {fileID: 0}
   _backgroundImage: {fileID: 3487769174261959553}
-  _removeButton: {fileID: 0}
-  _canvasGroup: {fileID: 0}
   _normalAlpha: {r: 1, g: 1, b: 1, a: 1}
-  _draggingAlpha: {r: 1, g: 1, b: 1, a: 0.8}
   _usedAlpha: {r: 1, g: 1, b: 1, a: 0.5}
   _dragScale: 1.1
 --- !u!1 &2654377065933252739

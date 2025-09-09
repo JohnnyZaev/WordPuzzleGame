@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9c235ccccb97e64e84f91d2bbc713d5, type: 3}
-  m_Name: LetterCluster
+  m_Script: {fileID: 11500000, guid: 91044c549eeb4294a5951924d2761e7a, type: 3}
+  m_Name: "WordData_\u0418\u0433\u0440\u043E\u043A\u0438"
   m_EditorClassIdentifier: 
-  _letters: 
-  _frameColor: {r: 1, g: 1, b: 1, a: 1}
+  _word: "\u0418\u0413\u0420\u041E\u041A\u0418"
