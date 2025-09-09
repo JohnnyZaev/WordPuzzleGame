@@ -149,6 +149,13 @@ namespace WPG.Runtime.Gameplay.Views
             
             if (clusterViewModels != null)
             {
+                // Shuffle the clusterViewModels before instantiating
+                for (int i = clusterViewModels.Count - 1; i > 0; i--)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, i + 1);
+                    (clusterViewModels[i], clusterViewModels[randomIndex]) = (clusterViewModels[randomIndex], clusterViewModels[i]);
+                }
+                
                 foreach (var viewModel in clusterViewModels)
                 {
                     var view = Instantiate(_letterClusterPrefab, _letterClustersContainer);

@@ -47,7 +47,7 @@ namespace WPG.Runtime.Gameplay.Views
             if (_mainMenuButton != null)
             {
                 _mainMenuButton.OnClickAsObservable()
-                    .ThrottleFirst(TimeSpan.MaxValue)
+                    .ThrottleFirst(TimeSpan.FromSeconds(1))
                     .Subscribe(_ => _viewModel.MainMenuCommand.Execute(Unit.Default))
                     .AddTo(_disposables);
             }
@@ -55,7 +55,7 @@ namespace WPG.Runtime.Gameplay.Views
             if (_nextLevelButton != null)
             {
                 _nextLevelButton.OnClickAsObservable()
-                    .ThrottleFirst(TimeSpan.MaxValue)
+                    .ThrottleFirst(TimeSpan.FromSeconds(1))
                     .Subscribe(_ => _viewModel.NextLevelCommand.Execute(Unit.Default))
                     .AddTo(_disposables);
             }

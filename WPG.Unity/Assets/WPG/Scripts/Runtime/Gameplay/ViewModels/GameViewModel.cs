@@ -187,12 +187,22 @@ namespace WPG.Runtime.Gameplay.ViewModels
             }
         }
         
-        private void HandleGoToMainMenu()
+        private async void HandleGoToMainMenu()
         {
             ShowVictoryScreen.Value = false;
             Log.Gameplay.Info("Going to Main Menu");
 
             _loadingController.StartLoading();
+            int nextLevel = CurrentLevelNumber.Value + 1;
+            if (_levelDataLoader.LevelExists(nextLevel))
+            {
+                await UpdateMenuDTOCurrentLevel(nextLevel);
+            }
+            else
+            {
+                await UpdateMenuDTOCurrentLevel(1);
+                Log.Gameplay.Info($"No more levels available, resetting to level 1");
+            }
             SceneManager.LoadSceneAsync(RuntimeConstants.Scenes.Menu);
             _loadingController.ReportLoadingProgress(1, 3);
         }
